@@ -44,7 +44,7 @@ datas = [
 sys.modules['FixTk'] = None
 excludes = ['FixTk', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter']
 
-a = Analysis(['electrum-dash'],
+a = Analysis(['electrum-quebecoin'],
              pathex=['plugins'],
              hiddenimports=hiddenimports,
              datas=datas,
@@ -75,8 +75,8 @@ exe = EXE(pyz,
           strip=False,
           upx=False,
           console=False,
-          icon='icons/electrum-dash.ico',
-          name=os.path.join('build/electrum-dash/electrum-dash', cmdline_name))
+          icon='icons/electrum-quebecoin.ico',
+          name=os.path.join('build/electrum-quebecoin/electrum-quebecoin', cmdline_name))
 
 # trezorctl separate bin
 tctl_a = Analysis(['/usr/local/bin/trezorctl'],
@@ -93,17 +93,17 @@ tctl_exe = EXE(tctl_pyz,
            strip=False,
            upx=False,
            console=True,
-           name=os.path.join('build/electrum-dash/electrum-dash', 'trezorctl.bin'))
+           name=os.path.join('build/electrum-quebecoin/electrum-quebecoin', 'trezorctl.bin'))
 
 coll = COLLECT(exe, tctl_exe,
                a.binaries,
                a.datas,
                strip=False,
                upx=False,
-               name=os.path.join('dist', 'electrum-dash'))
+               name=os.path.join('dist', 'electrum-quebecoin'))
 
 app = BUNDLE(coll,
-             name=os.path.join('dist', 'Electrum-DASH.app'),
-             appname="Electrum-DASH",
-	         icon='electrum-dash.icns',
+             name=os.path.join('dist', 'Electrum-QBC.app'),
+             appname="Electrum-QBC",
+	         icon='electrum-quebecoin.icns',
              version = 'ELECTRUM_VERSION')

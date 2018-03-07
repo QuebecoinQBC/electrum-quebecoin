@@ -52,7 +52,7 @@ DEFAULT_PORTS = {'t':'50001', 's':'50002'}
 #then gradually switch remaining nodes to e-x nodes
 
 DEFAULT_SERVERS = {
-    'electrum.dash.siampm.com':DEFAULT_PORTS,  # thelazier
+    '127.0.0.1':DEFAULT_PORTS,  # thelazier
     # cert verify failed 'electrum-drk.club':DEFAULT_PORTS,         # duffman
 }
 
@@ -60,7 +60,7 @@ def set_testnet():
     global DEFAULT_PORTS, DEFAULT_SERVERS
     DEFAULT_PORTS = {'t':'51001', 's':'51002'}
     DEFAULT_SERVERS = {
-        'localhost': DEFAULT_PORTS,
+        '127.0.0.1': DEFAULT_PORTS,
     }
 
 
@@ -557,14 +557,16 @@ class Network(util.DaemonThread):
         elif method == 'blockchain.estimatefee':
             if error is None and result > 0:
                 i = params[0]
-                fee = int(result*COIN)
+   #             fee = int(result*  COIN)
+                fee = int(result)
                 self.config.fee_estimates[i] = fee
                 self.print_error("fee_estimates[%d]" % i, fee)
                 self.notify('fee')
         elif method == 'blockchain.relayfee':
             if error is None:
-                self.relay_fee = int(result * COIN)
-                self.print_error("relayfee", self.relay_fee)
+          #      self.relay_fee = int(result * COIN)
+              self.relay_fee = result  
+          #    self.print_error("relayfee",self.relay_fee)
         elif method == 'blockchain.block.get_chunk':
             self.on_get_chunk(interface, response)
         elif method == 'blockchain.block.get_header':
@@ -867,13 +869,14 @@ class Network(util.DaemonThread):
                 self.notify('updated')
 
         elif interface.mode == 'catch_up':
+            interface.print_error("Try to connect")
             can_connect = interface.blockchain.can_connect(header)
             if can_connect:
                 interface.blockchain.save_header(header)
                 next_height = height + 1 if height < interface.tip else None
             else:
                 # go back
-                interface.print_error("cannot connect", height)
+                interface.print_error("cannot connect to height", height)
                 interface.mode = 'backward'
                 interface.bad = height
                 interface.bad_header = header
@@ -953,6 +956,7 @@ class Network(util.DaemonThread):
                 os.rename(filename + '.tmp', filename)
                 self.print_error("done.")
             except Exception:
+                self.print_error("DEBUG. creating file", bitcoin.HEADERS_URL)
                 self.print_error("download failed. creating file", filename)
                 open(filename, 'wb+').close()
             b = self.blockchains[0]

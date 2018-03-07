@@ -181,7 +181,7 @@ class SendScreen(CScreen):
         try:
             uri = electrum_dash.util.parse_URI(text, self.app.on_pr)
         except:
-            self.app.show_info(_("Not a Dash URI"))
+            self.app.show_info(_("Not a Quebecoin URI"))
             return
         amount = uri.get('amount')
         self.screen.address = uri.get('address', '')
@@ -251,10 +251,10 @@ class SendScreen(CScreen):
         else:
             address = str(self.screen.address)
             if not address:
-                self.app.show_error(_('Recipient not specified.') + ' ' + _('Please scan a Dash address or a payment request'))
+                self.app.show_error(_('Recipient not specified.') + ' ' + _('Please scan a Quebecoin address or a payment request'))
                 return
             if not bitcoin.is_address(address):
-                self.app.show_error(_('Invalid Dash Address') + ':\n' + address)
+                self.app.show_error(_('Invalid Quebecoin Address') + ':\n' + address)
                 return
             try:
                 amount = self.app.get_amount(self.screen.amount)
@@ -362,7 +362,7 @@ class ReceiveScreen(CScreen):
 
     def do_share(self):
         uri = self.get_URI()
-        self.app.do_share(uri, _("Share Dash Request"))
+        self.app.do_share(uri, _("Share Quebecoin Request"))
 
     def do_copy(self):
         uri = self.get_URI()

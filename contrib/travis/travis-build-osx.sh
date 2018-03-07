@@ -1,15 +1,15 @@
 #!/bin/bash
-BUILD_REPO_URL=https://github.com/akhavr/electrum-dash.git
+BUILD_REPO_URL=https://github.com/akhavr/electrum-quebecoin.git
 
 cd build
 
 if [[ -z $TRAVIS_TAG ]]; then
   exit 0
 else
-  git clone --branch $TRAVIS_TAG $BUILD_REPO_URL electrum-dash
+  git clone --branch $TRAVIS_TAG $BUILD_REPO_URL electrum-quebecoin
 fi
 
-cd electrum-dash
+cd electrum-quebecoin
 
 source ./contrib/travis/electrum_dash_version_env.sh;
 echo wine build version is $ELECTRUM_DASH_VERSION
@@ -41,9 +41,9 @@ cp /usr/local/lib/python2.7/site-packages/requests/cacert.pem packages/requests/
 
 pyinstaller \
     -y \
-    --name electrum-dash-$ELECTRUM_DASH_VERSION.bin \
+    --name electrum-quebecoin-$ELECTRUM_DASH_VERSION.bin \
     osx.spec
 
-sudo hdiutil create -fs HFS+ -volname "Electrum-DASH" \
+sudo hdiutil create -fs HFS+ -volname "Electrum-QBC" \
     -srcfolder dist/Electrum-DASH.app \
-    dist/electrum-dash-$ELECTRUM_DASH_VERSION-macosx.dmg
+    dist/electrum-quebecoin-$ELECTRUM_DASH_VERSION-macosx.dmg

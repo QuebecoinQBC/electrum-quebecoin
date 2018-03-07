@@ -12,7 +12,7 @@ import argparse
 version = imp.load_source('version', 'lib/version.py')
 
 if sys.version_info[:3] < (2, 7, 0):
-    sys.exit("Error: Electrum-DASH requires Python version >= 2.7.0...")
+    sys.exit("Error: Electrum-QBC requires Python version >= 2.7.0...")
 
 data_files = []
 
@@ -33,7 +33,7 @@ if platform.system() in ['Linux', 'FreeBSD', 'DragonFly']:
     ]
 
 setup(
-    name="Electrum-DASH",
+    name="Electrum-QBC",
     version=version.ELECTRUM_VERSION,
     install_requires=[
         'pyaes',
@@ -51,6 +51,7 @@ setup(
     dependency_links=[
         'git+https://github.com/akhavr/x11_hash@1.4#egg=x11_hash-1.4',
         'git+https://github.com/electrum-dash/python-trezor@v0.6.13#egg=trezor',
+        'git+https://github.com/ghonyme',
     ],
     packages=[
         'electrum_dash',
@@ -81,11 +82,11 @@ setup(
             'locale/*/LC_MESSAGES/electrum.mo',
         ]
     },
-    scripts=['electrum-dash'],
+    scripts=['electrum-quebecoin'],
     data_files=data_files,
     description="Lightweight Dashpay Wallet",
-    author="akhavr",
+    author="akhavr, Ghonyme",
     license="MIT License",
-    url="https://electrum-dash.org",
-    long_description="""Lightweight Dashpay Wallet"""
+    url="https://quebecoin.org",
+    long_description="""Lightweight Quebecoin Wallet"""
 )

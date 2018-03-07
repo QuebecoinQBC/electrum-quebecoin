@@ -904,16 +904,13 @@ class Abstract_Wallet(PrintError):
                 item['num_sig'] = 1
                 inputs.append(item)
             keypairs[pubkey] = privkey
-
         if not inputs:
             raise BaseException(_('No inputs found. (Note that inputs need to be confirmed)'))
-
         total = sum(i.get('value') for i in inputs)
         if fee is None:
             outputs = [(TYPE_ADDRESS, recipient, total)]
             tx = Transaction.from_io(inputs, outputs)
             fee = self.estimate_fee(config, tx.estimated_size())
-
         if total - fee < 0:
             raise BaseException(_('Not enough funds on address.') + '\nTotal: %d satoshis\nFee: %d'%(total, fee))
 
@@ -923,6 +920,7 @@ class Abstract_Wallet(PrintError):
         outputs = [(TYPE_ADDRESS, recipient, total - fee)]
         tx = Transaction.from_io(inputs, outputs)
         tx.sign(keypairs)
+        print(tx)
         return tx
 
     def is_frozen(self, addr):
@@ -984,7 +982,7 @@ class Abstract_Wallet(PrintError):
             while not self.is_up_to_date():
                 if callback:
                     msg = "%s\n%s %d"%(
-                        _("Please wait..."),
+                        _("Please wait for the generation..."),
                         _("Addresses generated:"),
                         len(self.addresses(True)))
                     callback(msg)

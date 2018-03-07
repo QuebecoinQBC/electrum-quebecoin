@@ -11,6 +11,7 @@ except Exception:
     sys.exit(1)
 
 n = Network()
+print(str(n))
 n.start()
 h = n.synchronous_get(('blockchain.address.get_history',[addr]))
 print_msg(json_encode(h))

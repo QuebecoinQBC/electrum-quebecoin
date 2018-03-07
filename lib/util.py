@@ -36,7 +36,7 @@ import threading
 import hmac
 from i18n import _
 
-base_units = {'DASH':8, 'mDASH':5, 'uDASH':2}
+base_units = {'QBC':8, 'mQBC':5, 'uQBC':2}
 fee_levels = [_('Within 25 blocks'), _('Within 10 blocks'), _('Within 5 blocks'), _('Within 2 blocks'), _('In the next block')]
 
 def normalize_version(v):
@@ -285,7 +285,7 @@ def android_data_dir():
     return PythonActivity.mActivity.getFilesDir().getPath() + '/data'
 
 def android_headers_dir():
-    d = android_ext_dir() + '/org.electrum_dash.electrum_dash'
+    d = android_ext_dir() + '/org.electrum_quebecoin.electrum_quebecoin'
     if not os.path.exists(d):
         os.mkdir(d)
     return d
@@ -294,7 +294,7 @@ def android_check_data_dir():
     """ if needed, move old directory to sandbox """
     ext_dir = android_ext_dir()
     data_dir = android_data_dir()
-    old_electrum_dir = ext_dir + '/electrum-dash'
+    old_electrum_dir = ext_dir + '/electrum-quebecoin'
     if not os.path.exists(data_dir) and os.path.exists(old_electrum_dir):
         import shutil
         new_headers_path = android_headers_dir() + headers_file_name()
@@ -313,11 +313,11 @@ def user_dir():
     if 'ANDROID_DATA' in os.environ:
         return android_check_data_dir()
     elif os.name == 'posix':
-        return os.path.join(os.environ["HOME"], ".electrum-dash")
+        return os.path.join(os.environ["HOME"], ".electrum-quebecoin")
     elif "APPDATA" in os.environ:
-        return os.path.join(os.environ["APPDATA"], "Electrum-DASH")
+        return os.path.join(os.environ["APPDATA"], "Electrum-QBC")
     elif "LOCALAPPDATA" in os.environ:
-        return os.path.join(os.environ["LOCALAPPDATA"], "Electrum-DASH")
+        return os.path.join(os.environ["LOCALAPPDATA"], "Electrum-QBC")
     else:
         #raise Exception("No home directory found in environment variables.")
         return
@@ -416,16 +416,14 @@ def time_difference(distance_in_time, include_seconds):
 
 
 mainnet_block_explorers = {
-    'Dash.org': ('https://explorer.dash.org',
+    'quebecoin.org': ('http://explorateur-qbc.circonference.ca',
                        {'tx': 'tx', 'addr': 'address'}),
-    'Bchain.info': ('https://bchain.info/DASH',
-                       {'tx': 'tx', 'addr': 'addr'}),
-    'system default': ('blockchain:',
+    'system default': ('http://explorateur-qbc.circonference.ca',
                        {'tx': 'tx', 'addr': 'address'}),
 }
 
 testnet_block_explorers = {
-    'Dash.org': ('https://test.explorer.dash.org',
+    'quebecoin.org': ('http://explorateur-qbc.circonference.ca',
                        {'tx': 'tx', 'addr': 'address'}),
     'system default': ('blockchain:',
                        {'tx': 'tx', 'addr': 'address'}),
@@ -436,7 +434,7 @@ def block_explorer_info():
     return testnet_block_explorers if bitcoin.TESTNET else mainnet_block_explorers
 
 def block_explorer(config):
-    return config.get('block_explorer', 'Dash.org')
+    return config.get('quebecoin.org', 'system default')
 
 def block_explorer_tuple(config):
     return block_explorer_info().get(block_explorer(config))
@@ -461,12 +459,12 @@ def parse_URI(uri, on_pr=None):
 
     if ':' not in uri:
         if not bitcoin.is_address(uri):
-            raise BaseException("Not a Dash address")
+            raise BaseException("Not a Quebecoin address")
         return {'address': uri}
 
     u = urlparse.urlparse(uri)
-    if u.scheme != 'dash':
-        raise BaseException("Not a Dash URI")
+    if u.scheme != 'quebecoin':
+        raise BaseException("Not a Quebecoin URI")
     address = u.path
 
     # python for android fails to parse query
@@ -483,7 +481,7 @@ def parse_URI(uri, on_pr=None):
     out = {k: v[0] for k, v in pq.items()}
     if address:
         if not bitcoin.is_address(address):
-            raise BaseException("Invalid Dash address:" + address)
+            raise BaseException("Invalid Quebecoin address:" + address)
         out['address'] = address
     if 'amount' in out:
         am = out['amount']
@@ -534,7 +532,7 @@ def create_URI(addr, amount, message):
         if type(message) == unicode:
             message = message.encode('utf8')
         query.append('message=%s'%urllib.quote(message))
-    p = urlparse.ParseResult(scheme='dash', netloc='', path=addr, params='',
+    p = urlparse.ParseResult(scheme='quebecoin', netloc='', path=addr, params='',
                              query='&'.join(query), fragment='')
     return urlparse.urlunparse(p)
 

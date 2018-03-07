@@ -1,4 +1,4 @@
-"""Dash look and feel."""
+"""Quebecoin look and feel."""
 
 dash_stylesheet = """
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 from electrum_dash import SimpleConfig, set_verbosity
 from electrum_dash.network import filter_protocol
 import time, Queue
@@ -9,8 +8,12 @@ import util, json
 set_verbosity(False)
 
 config = SimpleConfig()
-servers = filter_protocol(protocol = 't')
-results = util.send_request(servers, 'blockchain.headers.subscribe', [])
+server = '127.0.0.1:50001:t'
+interfaces = get_interfaces([server])
+if not interfaces:
+  print "No connection to", server
+
+results = interfaces.send_request(servers, 'blockchain.headers.subscribe', [])
 
 d = defaultdict(int)
 

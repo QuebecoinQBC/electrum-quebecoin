@@ -44,13 +44,13 @@ import x11_hash
 # https://github.com/dashpay/dash/ 0.11.0 Release notes for drkp/drkv/DRKP/DRKV
 # https://github.com/satoshilabs/slips/blob/master/slip-0044.md
 TESTNET = False
-ADDRTYPE_P2PKH = 76
-ADDRTYPE_P2SH = 16
-WIF = 204
-XPRV_HEADER = 0x0488ade4
-XPUB_HEADER = 0x0488b21e
+ADDRTYPE_P2PKH = 58
+ADDRTYPE_P2SH = 5
+WIF = 186
+XPRV_HEADER = 0x0488ADE4
+XPUB_HEADER = 0x0488B21E
 HEADERS_URL = ''  # TODO headers bootstrap
-GENESIS = '00000ffd590b1485b3caadc19b22e6379c733355108f107a430458cdf3407ab6'
+GENESIS = '00000948015ca05a2197f8f676476c9dbc11de07c87e1a46f2331ea10f33087d'
 
 
 def set_testnet():
@@ -75,7 +75,7 @@ MAX_FEE_RATE = 10000
 FEE_TARGETS = [25, 10, 5, 2]
 
 COINBASE_MATURITY = 100
-COIN = 100000000
+COIN = 42000000
 
 # supported types of transction outputs
 TYPE_ADDRESS = 0
@@ -574,6 +574,7 @@ def pubkey_from_signature(sig, h):
     else:
         compressed = False
     recid = nV - 27
+    print("PUB KEY")
     return MyVerifyingKey.from_signature(sig[1:], recid, h, curve = SECP256k1), compressed
 
 
