@@ -34,7 +34,11 @@ hiddenimports = [
     'plugins.virtualkeyboard.qt',
 ]
 
+
 datas = [
+    ('cacert.pem', 'requests'),
+    ('lib/currencies.json', 'electrum_dash'),
+    ('lib/wordlist', 'electrum_dash/wordlist'),
 ]
 
 # https://github.com/pyinstaller/pyinstaller/wiki/Recipe-remove-tkinter-tcl
