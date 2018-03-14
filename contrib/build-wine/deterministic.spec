@@ -36,21 +36,22 @@ hiddenimports = [
 
 
 datas = [
-    ('cacert.pem', 'requests'),
-    ('lib/currencies.json', 'electrum_dash'),
-    ('lib/wordlist', 'electrum_dash/wordlist'),
+    ('/opt/wine64/drive_c/electrum/packages/requests/cacert.pem', 'requests'),
+    ('/opt/wine64/drive_c/electrum/lib/currencies.json', 'electrum_dash'),
+    ('/opt/wine64/drive_c/electrum/lib/wordlist', 'electrum_dash/wordlist'),
 ]
 
 # https://github.com/pyinstaller/pyinstaller/wiki/Recipe-remove-tkinter-tcl
 sys.modules['FixTk'] = None
 excludes = ['FixTk', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter']
 
-a = Analysis(['electrum-quebecoin'],
-             pathex=['plugins'],
+#a = Analysis(['electrum-quebecoin'],
+a = Analysis(['C:\\electrum\\electrum'],
+             pathex=['C:\\electrum'],
              hiddenimports=hiddenimports,
              datas=datas,
              excludes=excludes,
-             runtime_hooks=['pyi_runtimehook.py'])
+             runtime_hooks=['C:\\electrum\\contrib\\build-wine\\pyi_runtimehook.py'])
 
 # http://stackoverflow.com/questions/19055089/
 for d in a.datas:
@@ -76,7 +77,7 @@ exe = EXE(pyz,
           strip=False,
           upx=False,
           console=False,
-          icon='icons/electrum-quebecoin.ico',
+          icon='/opt/wine64/drive_c/electrum/icons/electrum.ico',
           name=os.path.join('build\\pyi.win32\\electrum', cmdline_name))
 
 # exe with console output
@@ -87,7 +88,7 @@ conexe = EXE(pyz,
           strip=False,
           upx=False,
           console=True,
-          icon='icons/electrum-quebecoin.ico',
+          icon='/opt/wine64/drive_c/electrum/icons/electrum.ico',
           name=os.path.join('build\\pyi.win32\\electrum',
                             'console-%s' % cmdline_name))
 
@@ -95,7 +96,7 @@ conexe = EXE(pyz,
 tctl_a = Analysis(['C:/Python27/Scripts/trezorctl'],
                   hiddenimports=['pkgutil'],
                   excludes=excludes,
-                  runtime_hooks=['pyi_tctl_runtimehook.py'])
+                  runtime_hooks=['C:\\electrum\\contrib\\build-wine\\pyi_tctl_runtimehook.py'])
 
 tctl_pyz = PYZ(tctl_a.pure)
 

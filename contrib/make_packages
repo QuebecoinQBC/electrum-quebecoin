@@ -20,10 +20,12 @@ if __name__ == '__main__':
         'requests', # note: requests-2.5.1 is needed to build with pyinstaller
         'qrcode',
         'google/protobuf',
-        'dns',
+#        'dnspython',
+        'x11_hash',
         'six',
         'jsonrpclib',
 	'socks',
+#        'dis3',
     ]
     for module in deps:
         f, pathname, descr = imp.find_module(module)
@@ -32,10 +34,13 @@ if __name__ == '__main__':
             continue
         d = os.path.dirname(target)
         if d and not (os.path.exists(d)):
+            print "icite"
             os.makedirs(d)
         if descr[0]:
+            print "HERE"
             shutil.copy(pathname, target)
         else:
+            print "HERE2"
             shutil.copytree(pathname, target, ignore=shutil.ignore_patterns('*.pyc'))
 
     # fix google/__init__.py needed by pyinstaller

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # You probably need to update only this link
-ELECTRUM_GIT_URL=git://github.com/spesmilo/electrum.git
+ELECTRUM_GIT_URL=https://github.com/ghonyme/electrum-quebecoin.git
 BRANCH=master
 NAME_ROOT=electrum
 
@@ -39,6 +39,8 @@ echo "Last commit: $VERSION"
 cd ..
 
 rm -rf $WINEPREFIX/drive_c/electrum
+
+echo "cp -r electrum-git $WINEPREFIX/drive_c/electrum"
 cp -r electrum-git $WINEPREFIX/drive_c/electrum
 cp electrum-git/LICENCE .
 
