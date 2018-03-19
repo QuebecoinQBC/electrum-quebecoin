@@ -60,6 +60,7 @@ for d in a.datas:
         break
 
 # Add TOC to electrum_dash, electrum_dash_gui, electrum_dash_plugins
+print str(a.pure)
 for p in sorted(a.pure):
     if p[0].startswith('lib') and p[2] == 'PYMODULE':
         a.pure += [('electrum_dash%s' % p[0][3:] , p[1], p[2])]

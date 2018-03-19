@@ -1,10 +1,10 @@
 #!/bin/bash
 
-TREZOR_GIT_URL=git://github.com/trezor/python-trezor.git
-KEEPKEY_GIT_URL=git://github.com/keepkey/python-keepkey.git
-BTCHIP_GIT_URL=git://github.com/LedgerHQ/btchip-python.git
+#TREZOR_GIT_URL=git://github.com/trezor/python-trezor.git
+#KEEPKEY_GIT_URL=git://github.com/keepkey/python-keepkey.git
+#BTCHIP_GIT_URL=git://github.com/LedgerHQ/btchip-python.git
 
-BRANCH=master
+#BRANCH=master
 
 # These settings probably don't need any change
 export WINEPREFIX=/opt/wine64
@@ -13,8 +13,8 @@ PYHOME=c:/python27
 PYTHON="wine $PYHOME/python.exe "
 
 # Let's begin!
-cd `dirname $0`
-set -e
+#cd `dirname $0`
+#set -e
 
 
 # downoad mingw-get-setup.exe
@@ -22,7 +22,7 @@ set -e
 #wine mingw-get-setup.exe
 
 #echo "add c:\MinGW\bin to PATH using regedit" in HKEY_CURRENT_USER/Environment
-regedit
+#regedit
 #exit
 
 wine mingw-get install gcc

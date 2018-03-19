@@ -2,8 +2,10 @@
 
 # Please update these links carefully, some versions won't work under Wine
 PYTHON_URL=https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi
+#PYQT4_URL=https://downloads.sourceforge.net/project/pyqt/PyQt5/PyQt-5.6/PyQt5-5.6-gpl-Py3.5-Qt5.6.0-x32-2.exe
 PYQT4_URL=http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.1/PyQt4-4.11.1-gpl-Py2.7-Qt4.8.6-x32.exe
 PYWIN32_URL=http://sourceforge.net/projects/pywin32/files/pywin32/Build%20219/pywin32-219.win32-py2.7.exe/download
+
 #PYINSTALLER_URL=https://pypi.python.org/packages/source/P/PyInstaller/PyInstaller-2.1.zip
 PYINSTALLER_URL=https://pypi.python.org/packages/3c/86/909a8c35c5471919b3854c01f43843d9b5aed0e9948b63e560010f7f3429/PyInstaller-3.3.1.tar.gz
 NSIS_URL=http://prdownloads.sourceforge.net/nsis/nsis-2.46-setup.exe?download
@@ -74,8 +76,8 @@ wine setuptools.exe
 wget -q -O nsis.exe "$NSIS_URL"
 wine nsis.exe
 
-wget -q -O vc.msi "$VCPYTHON"
-wine msiexec /i vc.msi
+#wget -q -O vc.msi "$VCPYTHON"
+#wine msiexec /i vc.msi
 
 # Install UPX
 #wget -O upx.zip "http://upx.sourceforge.net/download/upx308w.zip"

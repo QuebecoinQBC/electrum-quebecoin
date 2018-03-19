@@ -46,7 +46,7 @@ cp electrum-git/LICENCE .
 
 # add python packages (built with make_packages)
 cp -r ../../../packages $WINEPREFIX/drive_c/electrum/
-
+cp -r ../../../packages/* $WINEPREFIX/drive_c/Python27/Lib/
 # add locale dir
 cp -r ../../../lib/locale $WINEPREFIX/drive_c/electrum/lib/
 
@@ -65,11 +65,12 @@ $PYTHON "C:/pyinstaller/pyinstaller.py" --noconfirm --ascii --name $NAME_ROOT-$V
 # $VERSION could be passed to the electrum.nsi script, but this would require some rewriting in the script iself.
 wine "$WINEPREFIX/drive_c/Program Files (x86)/NSIS/makensis.exe" /DPRODUCT_VERSION=$VERSION electrum.nsi
 
-cd dist
-mv electrum-setup.exe $NAME_ROOT-$VERSION-setup.exe
-cd ..
+#cd dist
+#mv electrum-setup.exe $NAME_ROOT-$VERSION-setup.exe
+#cd ..
 
 # build portable version
+echo "Will build portable version"
 cp portable.patch $WINEPREFIX/drive_c/electrum
 pushd $WINEPREFIX/drive_c/electrum
 patch < portable.patch 

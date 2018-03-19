@@ -20,12 +20,19 @@ if __name__ == '__main__':
         'requests', # note: requests-2.5.1 is needed to build with pyinstaller
         'qrcode',
         'google/protobuf',
-#        'dnspython',
+        'dns',
         'x11_hash',
         'six',
         'jsonrpclib',
 	'socks',
-#        'dis3',
+        'dis3',
+        'request',
+        'x11_hash',
+        'pefile',
+        'builtins',
+        'future',
+        'ordlookup',
+        'mnemonic',
     ]
     for module in deps:
         f, pathname, descr = imp.find_module(module)

@@ -2603,14 +2603,14 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         multiple_cb.stateChanged.connect(on_multiple)
         tx_widgets.append((multiple_cb, None))
 
-        def fmt_docs(key, klass):
-            lines = [ln.lstrip(" ") for ln in klass.__doc__.split("\n")]
-            return '\n'.join([key, "", " ".join(lines)])
+    #    def fmt_docs(key, klass):
+    #        lines = [ln.lstrip(" ") for ln in klass.__doc__.split("\n")]
+    #        return '\n'.join([key, "", " ".join(lines)])
 
         choosers = sorted(coinchooser.COIN_CHOOSERS.keys())
         chooser_name = coinchooser.get_name(self.config)
         msg = _('Choose coin (UTXO) selection method.  The following are available:\n\n')
-        msg += '\n\n'.join(fmt_docs(*item) for item in coinchooser.COIN_CHOOSERS.items())
+    #    msg += '\n\n'.join(fmt_docs(*item) for item in coinchooser.COIN_CHOOSERS.items())
         chooser_label = HelpLabel(_('Coin selection') + ':', msg)
         chooser_combo = QComboBox()
         chooser_combo.addItems(choosers)
