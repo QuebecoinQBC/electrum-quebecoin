@@ -82,7 +82,7 @@ setup(
             'locale/*/LC_MESSAGES/electrum.mo',
         ]
     },
-    scripts=['electrum-quebecoin'],
+    scripts=['electrum-QBC'],
     data_files=data_files,
     description="Lightweight Dashpay Wallet",
     author="akhavr, Ghonyme",

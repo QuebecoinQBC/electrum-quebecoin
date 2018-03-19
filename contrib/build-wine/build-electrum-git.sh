@@ -23,13 +23,13 @@ if [ -d "electrum-git" ]; then
     # GIT repository found, update it
     echo "Pull"
     cd electrum-git
-    git pull
-    git checkout $BRANCH
+#    git pull
+#    git checkout $BRANCH
     cd ..
 else
     # GIT repository not found, clone it
     echo "Clone"
-    git clone -b $BRANCH $ELECTRUM_GIT_URL electrum-git
+#    git clone -b $BRANCH $ELECTRUM_GIT_URL electrum-git
 fi
 
 cd electrum-git

@@ -25,7 +25,7 @@ CCY_PRECISIONS = {'BHD': 3, 'BIF': 0, 'BYR': 0, 'CLF': 4, 'CLP': 0,
                   'BTC': 8}
 
 
-DEFAULT_EXCHANGE = 'Bittrex'
+DEFAULT_EXCHANGE = 'CoinMarketCap'
 DEFAULT_CCY = 'BTC'
 
 
@@ -121,7 +121,7 @@ class Poloniex(ExchangeBase):
 
 class CoinMarketCap(ExchangeBase):
     def get_rates(self, ccy):
-        json = self.get_json('api.coinmarketcap.com', '/v1/ticker/dash/')
+        json = self.get_json('api.coinmarketcap.com', '/v1/ticker/quebecoin/')
         quote_currencies = {}
         if not isinstance(json, list):
             return quote_currencies

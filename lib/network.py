@@ -361,6 +361,7 @@ class Network(util.DaemonThread):
 
     def get_donation_address(self):
         if self.is_connected():
+            print (self.donation_address)
             return self.donation_address
 
     def get_interfaces(self):

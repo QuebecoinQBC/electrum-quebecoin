@@ -285,7 +285,7 @@ def android_data_dir():
     return PythonActivity.mActivity.getFilesDir().getPath() + '/data'
 
 def android_headers_dir():
-    d = android_ext_dir() + '/org.electrum_quebecoin.electrum_quebecoin'
+    d = android_ext_dir() + '/org.electrum_dash.electrum_dash'
     if not os.path.exists(d):
         os.mkdir(d)
     return d
@@ -294,7 +294,7 @@ def android_check_data_dir():
     """ if needed, move old directory to sandbox """
     ext_dir = android_ext_dir()
     data_dir = android_data_dir()
-    old_electrum_dir = ext_dir + '/electrum-quebecoin'
+    old_electrum_dir = ext_dir + '/electrum-dash'
     if not os.path.exists(data_dir) and os.path.exists(old_electrum_dir):
         import shutil
         new_headers_path = android_headers_dir() + headers_file_name()
@@ -313,7 +313,7 @@ def user_dir():
     if 'ANDROID_DATA' in os.environ:
         return android_check_data_dir()
     elif os.name == 'posix':
-        return os.path.join(os.environ["HOME"], ".electrum-quebecoin")
+        return os.path.join(os.environ["HOME"], ".electrum-QBC")
     elif "APPDATA" in os.environ:
         return os.path.join(os.environ["APPDATA"], "Electrum-QBC")
     elif "LOCALAPPDATA" in os.environ:
@@ -416,14 +416,16 @@ def time_difference(distance_in_time, include_seconds):
 
 
 mainnet_block_explorers = {
-    'quebecoin.org': ('http://explorateur-qbc.circonference.ca',
+    'Dash.org': ('https://explorer.dash.org',
                        {'tx': 'tx', 'addr': 'address'}),
-    'system default': ('http://explorateur-qbc.circonference.ca',
+    'Bchain.info': ('https://bchain.info/QBC',
+                       {'tx': 'tx', 'addr': 'addr'}),
+    'system default': ('blockchain:',
                        {'tx': 'tx', 'addr': 'address'}),
 }
 
 testnet_block_explorers = {
-    'quebecoin.org': ('http://explorateur-qbc.circonference.ca',
+    'Dash.org': ('https://test.explorer.dash.org',
                        {'tx': 'tx', 'addr': 'address'}),
     'system default': ('blockchain:',
                        {'tx': 'tx', 'addr': 'address'}),
@@ -434,7 +436,7 @@ def block_explorer_info():
     return testnet_block_explorers if bitcoin.TESTNET else mainnet_block_explorers
 
 def block_explorer(config):
-    return config.get('quebecoin.org', 'system default')
+    return config.get('block_explorer', 'Dash.org')
 
 def block_explorer_tuple(config):
     return block_explorer_info().get(block_explorer(config))
@@ -459,12 +461,13 @@ def parse_URI(uri, on_pr=None):
 
     if ':' not in uri:
         if not bitcoin.is_address(uri):
-            raise BaseException("Not a Quebecoin address")
+            raise BaseException("Not a QBC address")
         return {'address': uri}
 
     u = urlparse.urlparse(uri)
-    if u.scheme != 'quebecoin':
-        raise BaseException("Not a Quebecoin URI")
+    print (u.scheme)
+    if u.scheme != 'qbc':
+        raise BaseException("Not a QBC URI")
     address = u.path
 
     # python for android fails to parse query
@@ -481,7 +484,7 @@ def parse_URI(uri, on_pr=None):
     out = {k: v[0] for k, v in pq.items()}
     if address:
         if not bitcoin.is_address(address):
-            raise BaseException("Invalid Quebecoin address:" + address)
+            raise BaseException("Invalid Dash address:" + address)
         out['address'] = address
     if 'amount' in out:
         am = out['amount']
@@ -532,7 +535,7 @@ def create_URI(addr, amount, message):
         if type(message) == unicode:
             message = message.encode('utf8')
         query.append('message=%s'%urllib.quote(message))
-    p = urlparse.ParseResult(scheme='quebecoin', netloc='', path=addr, params='',
+    p = urlparse.ParseResult(scheme='QBC', netloc='', path=addr, params='',
                              query='&'.join(query), fragment='')
     return urlparse.urlunparse(p)
 
