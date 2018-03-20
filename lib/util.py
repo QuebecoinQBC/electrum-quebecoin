@@ -416,11 +416,9 @@ def time_difference(distance_in_time, include_seconds):
 
 
 mainnet_block_explorers = {
-    'Dash.org': ('https://explorer.dash.org',
+    'circonference.ca': ('explorateur-qbc.circonference.ca',
                        {'tx': 'tx', 'addr': 'address'}),
-    'Bchain.info': ('https://bchain.info/QBC',
-                       {'tx': 'tx', 'addr': 'addr'}),
-    'system default': ('blockchain:',
+    'system default': ('explorateur-qbc.circonference.ca',
                        {'tx': 'tx', 'addr': 'address'}),
 }
 
@@ -436,7 +434,7 @@ def block_explorer_info():
     return testnet_block_explorers if bitcoin.TESTNET else mainnet_block_explorers
 
 def block_explorer(config):
-    return config.get('block_explorer', 'Dash.org')
+    return config.get('block_explorer', 'circonference.ca')
 
 def block_explorer_tuple(config):
     return block_explorer_info().get(block_explorer(config))

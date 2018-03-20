@@ -3,7 +3,7 @@
 # You probably need to update only this link
 ELECTRUM_GIT_URL=https://github.com/ghonyme/electrum-quebecoin.git
 BRANCH=master
-NAME_ROOT=electrum
+NAME_ROOT=electrum-QBC
 
 
 # These settings probably don't need any change

@@ -52,13 +52,13 @@ from electrum_dash import Transaction, mnemonic
 from electrum_dash import util, bitcoin, commands, coinchooser
 from electrum_dash import SimpleConfig, paymentrequest
 from electrum_dash.wallet import Wallet, Multisig_Wallet
-from electrum_dash.masternode_manager import MasternodeManager
+#from electrum_dash.masternode_manager import MasternodeManager
 
 from amountedit import AmountEdit, BTCAmountEdit, MyLineEdit, BTCkBEdit
 from qrcodewidget import QRCodeWidget, QRDialog
 from qrtextedit import ShowQRTextEdit
 from transaction_dialog import show_transaction
-from masternode_dialog import MasternodeDialog
+#from masternode_dialog import MasternodeDialog
 from fee_slider import FeeSlider
 
 
@@ -97,7 +97,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
 
         self.setObjectName("main_window_container")
         self.wallet = None
-        self.masternode_manager = None
+  #      self.masternode_manager = None
         self.gui_object = gui_object
         self.config = config = gui_object.config
         self.network = gui_object.daemon.network
@@ -168,7 +168,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         QShortcut(QKeySequence("Ctrl+R"), self, self.update_wallet)
         QShortcut(QKeySequence("Ctrl+PgUp"), self, lambda: wrtabs.setCurrentIndex((wrtabs.currentIndex() - 1)%wrtabs.count()))
         QShortcut(QKeySequence("Ctrl+PgDown"), self, lambda: wrtabs.setCurrentIndex((wrtabs.currentIndex() + 1)%wrtabs.count()))
-        QShortcut(QKeySequence("Ctrl+M"), self, self.show_masternode_dialog)
+#        QShortcut(QKeySequence("Ctrl+M"), self, self.show_masternode_dialog)
 
         for i in range(wrtabs.count()):
             QShortcut(QKeySequence("Alt+" + str(i + 1)), self, lambda i=i: wrtabs.setCurrentIndex(i))
@@ -291,7 +291,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
 
         elif event == 'new_transaction':
             self.tx_notifications.append(args[0])
-        elif event in ['status', 'banner', 'verified', 'fee', 'proposals']:
+        elif event in ['status', 'banner', 'verified', 'fee']:
             # Handle in GUI thread
             self.emit(QtCore.SIGNAL('network'), event, *args)
         else:
@@ -309,8 +309,8 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             if self.config.is_dynfee():
                 self.fee_slider.update()
                 self.do_update_fee()
-        elif event == 'proposals':
-            self.proposals_changed()
+#        elif event == 'proposals':
+#            self.proposals_changed()
         else:
             self.print_error("unexpected network_qt signal:", event, args)
 
@@ -334,10 +334,10 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
     def load_wallet(self, wallet):
         wallet.thread = TaskThread(self, self.on_error)
         self.wallet = wallet
-        self.masternode_manager = MasternodeManager(self.wallet, self.config)
+ #       self.masternode_manager = MasternodeManager(self.wallet, self.config)
         self.update_recently_visited(wallet.storage.path)
         # address used to create a dummy transaction and estimate transaction fee
-        self.masternode_manager.send_subscriptions()
+        #self.masternode_manager.send_subscriptions()
         self.history_list.update()
         self.address_list.update()
         self.utxo_list.update()
@@ -504,7 +504,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         add_toggle_action(view_menu, self.console_tab)
 
         wallet_menu.addSeparator()
-        wallet_menu.addAction(_("Masternodes"), self.show_masternode_dialog)
+      #  wallet_menu.addAction(_("Masternodes"), self.show_masternode_dialog)
 
         tools_menu = menubar.addMenu(_("&Tools"))
 
@@ -542,7 +542,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         d = self.network.get_donation_address()
         if d:
             host = self.network.get_parameters()[0]
-            self.pay_to_URI('dash:%s?message=donation for %s'%(d, host))
+            self.pay_to_URI('qbc:%s?message=donation for %s'%(d, host))
         else:
             self.show_error(_('No donation address for this server'))
 
@@ -739,7 +739,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         self.utxo_list.update()
         self.contact_list.update()
         self.invoice_list.update()
-        self.update_proposals_tab()
+#        self.update_proposals_tab()
         self.update_completions()
 
     def create_history_tab(self):
@@ -1090,8 +1090,8 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         self.connect_fields(self, self.amount_e, self.fiat_send_e, self.fee_e)
 
         grid.addWidget(self.fee_e_label, 5, 0)
-        grid.addWidget(self.fee_slider, 5, 1)
-        grid.addWidget(self.fee_e, 5, 2)
+   #     grid.addWidget(self.fee_slider, 5, 1)
+        grid.addWidget(self.fee_e, 5, 1)
 
         self.preview_button = EnterButton(_("Preview"), self.do_preview)
         self.preview_button.setToolTip(_('Display the details of your transactions before signing it.'))
@@ -1579,17 +1579,17 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         l.setObjectName("contacts_container")
         return self.create_list_tab(l)
 
-    def create_proposals_tab(self):
-        from masternode_budget_widgets import ProposalsTab
-        self.proposals_list = ProposalsTab(self)
-        return self.proposals_list
+#    def create_proposals_tab(self):
+#        from masternode_budget_widgets import ProposalsTab
+#        self.proposals_list = ProposalsTab(self)
+#        return self.proposals_list
 
-    def update_proposals_tab(self):
+#    def update_proposals_tab(self):
         # Disabled until API is stable.
-        return
-        if not self.masternode_manager:
-            return
-        self.proposals_list.update(list(self.network.all_proposals))
+#        return
+ #       if not self.masternode_manager:
+#            return
+#        self.proposals_list.update(list(self.network.all_proposals))
 
     def remove_address(self, addr):
         if self.question(_("Do you want to remove")+" %s "%addr +_("from your wallet?")):
@@ -2054,7 +2054,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         if not data:
             return
         # if the user scanned a dash URI
-        if data.startswith("dash:"):
+        if data.startswith("qbc:"):
             self.pay_to_URI(data)
             return
         # else if the user scanned an offline signed tx
@@ -2436,7 +2436,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         dynfee_cb = QCheckBox(_('Use dynamic fees'))
         dynfee_cb.setChecked(self.config.is_dynfee())
         dynfee_cb.setToolTip(_("Use fees recommended by the server."))
-        fee_widgets.append((dynfee_cb, None))
+    #    fee_widgets.append((dynfee_cb, None))
         dynfee_cb.stateChanged.connect(on_dynfee)
 
         def on_maxfee(x):
@@ -2452,7 +2452,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         maxfee_e.setAmount(self.config.max_fee_rate())
         maxfee_e.textChanged.connect(on_maxfee)
         update_maxfee()
-        fee_widgets.append((maxfee_label, maxfee_e))
+     #   fee_widgets.append((maxfee_label, maxfee_e))
 
         feebox_cb = QCheckBox(_('Edit fees manually'))
         feebox_cb.setChecked(self.config.get('show_fee', False))
@@ -2461,7 +2461,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             self.config.set_key('show_fee', x == Qt.Checked)
             self.fee_e.setVisible(bool(x))
         feebox_cb.stateChanged.connect(on_feebox)
-        fee_widgets.append((feebox_cb, None))
+     #   fee_widgets.append((feebox_cb, None))
 
         msg = _('OpenAlias record, used to receive coins and to sign payment requests.') + '\n\n'\
               + _('The following alias providers are available:') + '\n'\
@@ -2488,7 +2488,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         set_alias_color()
         self.connect(self, SIGNAL('alias_received'), set_alias_color)
         alias_e.editingFinished.connect(on_alias_edit)
-        id_widgets.append((alias_label, alias_e))
+    #    id_widgets.append((alias_label, alias_e))
 
         # SSL certificate
         msg = ' '.join([
@@ -2511,7 +2511,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         if SSL_error:
             SSL_id_e.setToolTip(SSL_error)
         SSL_id_e.setReadOnly(True)
-        id_widgets.append((SSL_id_label, SSL_id_e))
+    #    id_widgets.append((SSL_id_label, SSL_id_e))
 
         units = ['QBC', 'mQBC', 'uQBC']
         msg = _('Base unit of your wallet.')\
@@ -2697,15 +2697,15 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
 
         fiat_widgets = []
         fiat_widgets.append((QLabel(_('Fiat currency')), ccy_combo))
-        fiat_widgets.append((QLabel(_('Show history rates')), hist_checkbox))
+ #       fiat_widgets.append((QLabel(_('Show history rates')), hist_checkbox))
         fiat_widgets.append((QLabel(_('Source')), ex_combo))
 
         tabs_info = [
-            (fee_widgets, _('Fees')),
+        #    (fee_widgets, _('Fees')),
             (tx_widgets, _('Transactions')),
             (gui_widgets, _('Appearance')),
             (fiat_widgets, _('Fiat')),
-            (id_widgets, _('Identity')),
+        #    (id_widgets, _('Identity')),
         ]
         for widgets, name in tabs_info:
             tab = QWidget()
@@ -2823,12 +2823,12 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         vbox.addLayout(Buttons(CloseButton(d)))
         d.exec_()
 
-    def show_masternode_dialog(self):
-        d = MasternodeDialog(self.masternode_manager, self)
-        d.exec_()
+#    def show_masternode_dialog(self):
+#        d = MasternodeDialog(self.masternode_manager, self)
+#        d.exec_()
 
-    def proposals_changed(self):
-        """Callback for when proposals change."""
-        if not self.masternode_manager:
-            return
-        self.update_proposals_tab()
+#    def proposals_changed(self):
+#        """Callback for when proposals change."""
+#        if not self.masternode_manager:
+#            return
+#        self.update_proposals_tab()

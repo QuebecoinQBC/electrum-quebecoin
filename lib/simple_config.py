@@ -123,6 +123,12 @@ class SimpleConfig(PrintError):
         return
 
     def get(self, key, default=None):
+        if key == 'dynamic_fees':
+          return False
+        if key == 'fee_per_kb':
+          return 5000000
+        if key == 'show_fee':
+          return True
         with self.lock:
             out = self.cmdline_options.get(key)
             if out is None:

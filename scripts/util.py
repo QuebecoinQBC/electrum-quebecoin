@@ -47,7 +47,7 @@ def wait_on_interfaces(interfaces, timeout=10):
 def get_peers():
     peers = []
     # 1. get connected interfaces
-    server = '127.0.0.1:50001:t'
+    server = '138.197.154.194:50002:t'
     interfaces = get_interfaces([server])
     if not interfaces:
         print "No connection to", server
